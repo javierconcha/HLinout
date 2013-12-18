@@ -1,0 +1,379 @@
+% by Javier A. Concha
+% 11/05/12
+% more info at http://kmh-lanl.hansonhub.com/spie/
+
+%  article.tex (Version 3.3, released 19 January 2008)
+%  Article to demonstrate format for SPIE Proceedings
+%  Special instructions are included in this file after the
+%  symbol %>>>>
+%  Numerous commands are commented out, but included to show how
+%  to effect various options, e.g., to print page numbers, etc.
+%  This LaTeX source file is composed for LaTeX2e.
+
+%  The following commands have been added in the SPIE class 
+%  file (spie.cls) and will not be understood in other classes:
+%  \supit{}, \authorinfo{}, \skiplinehalf, \keywords{}
+%  The bibliography style file is called spiebib.bst, 
+%  which replaces the standard style unstr.bst.  
+
+\documentclass[]{spie}  %>>> use for US letter paper
+%%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
+%%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
+%% \addtolength{\voffset}{9mm}   %>>> moves text field down
+%% \renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
+%  The following command loads a graphics package to include images 
+%  in the document. It may be necessary to specify a DVI driver option,
+%  e.g., [dvips], but that may be inappropriate for some LaTeX 
+%  installations. 
+\usepackage[]{graphicx}
+\usepackage{subfig}
+\usepackage{color,soul}
+\usepackage[font=small]{caption}
+%\usepackage[superscript]{cite}
+\usepackage{amssymb,amsmath}
+\usepackage{mathtools}
+\usepackage[english]{babel} % for wrapping column in tables
+\usepackage{array}% for m{width} wrapping in tables
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
+
+\usepackage{natbib} % to cite author's name
+
+\usepackage{listings}
+\usepackage{color}
+ \usepackage{pdflscape}
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist  % for abstract margin
+ \usepackage[T1]{fontenc} % for < and > symbols
+ 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  language=C,                % the language of the code
+  basicstyle=\scriptsize\ttfamily,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  %tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add a comment within your code
+  morekeywords={*,...,lsqnonlin},              % if you want to add more keywords to the set
+  aboveskip=10pt,
+  belowskip=-12pt
+}
+
+
+\setlength{\captionmargin}{15pt}
+
+\title{Water Quality Components \\ Measurement Protocol Review}
+
+%>>>> The author is responsible for formatting the 
+%  author list and their institutions.  Use  \skiplinehalf 
+%  to separate author list from addresses and between each address.
+%  The correspondence between each author and his/her address
+%  can be indicated with a superscript in italics, 
+%  which is easily obtained with \supit{}.
+
+\author{{\LARGE Javier A. Concha}
+\skiplinehalf
+{\normalsize Center for Imaging Science,\\ Rochester Institute of Technology,\\Rochester, NY 14623, USA\\}
+%\supit{b}Affiliation2, Address, City, Country
+}
+ \date{\today}
+%>>>> Further information about the authors, other than their 
+%  institution and addresses, should be included as a footnote, 
+%  which is facilitated by the \authorinfo{} command.
+
+\authorinfo{Further author information:\\J.A.C.: E-mail: jxc4005@rit.edu, Telephone:  $+$1\,585\,290--3145}
+%\\  A.D.G.: E-mail: adgpci@cis.rit.edu, Telephone: $+$1\,585\,475--43882}
+%%>>>> when using amstex, you need to use @@ instead of @
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%>>>> uncomment following for page numbers
+% \pagestyle{plain}    
+%>>>> uncomment following to start page numbering at 301 
+%\setcounter{page}{301} 
+ 
+  \begin{document} 
+  \maketitle 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% \section*{ABSTRACT} 
+% \begin{changemargin}{2em}{2em}
+% A description of the procedure to control the fluorescence spectrophotometer using the serial port is given. How to connect the instrument using the different cables, specifications and the software used are described. 
+% \end{changemargin}
+
+% %>>>> Include a list of keywords after the abstract 
+
+% \begin{keywords} 
+% ~Fluorescence Spectrophotometer, Fluorimeter, Fluorometer, Spectrofluorometer, Hitachi F-3010.
+% \end{keywords}
+
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\section{Introduction}
+%------------- 
+\begin{figure}[h]
+% \subfloat[]{
+\centering
+    \includegraphics[width=10cm]{/Users/javier/Desktop/Javier/PHD_RIT/LDCM/WaterQualityProtocols/Images/WaterQualityProtocolDiagram.png}%}\hspace{0.5cm}
+% \subfloat[]{   
+%     \includegraphics[width=8cm]{/Users/javier/Desktop/Javier/PHD_RIT/20122_Winter/Instrumentation/report3/Images/SideFluoSpec.jpg}}
+    \vspace{0.5cm}
+   \caption[]{\label{fig:ProtocolsDiagram} Protocols Diagram.}
+\end{figure}
+ %------------- 
+
+$a_{YS}$ cannot be determined directly. An approximation of $a_{YS}$ may be obtained by a spectrophotometer scan of a filtered sample (\citet{Bukata1995}, p.125). Spectrophotometer used in normal mode do not measure true absorbance but {\color{red} attenuance} because all the scattered light is measured. To overcome this, the cells can be placed close to a wide photomultiplier (\citet{Kirk1983}, p.51).
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\newpage
+\section{Water Samples Collection}
+\subsection{Equipment}
+
+\begin{multicols}{3}
+\begin{itemize}
+  \item Dark Nalgene bottles
+  \item Cooler
+  \item Marker
+  \item Bottle label
+  \item Ice packs
+  \item GPS
+  \item Extra batteries GPS
+  \item Data sheet
+  \item Pen
+  \item Back pen
+  \item Canoe 
+  \item Transport straps for canoe
+  \item Paddles
+  \item Life jacket
+  \item Suncream 
+  \item Drinking water
+  \item Wipes to clean extra suncream from hands
+  \item Bucket with rope (in case is not possible to take water samples due to bad condition weather, for example)
+\end{itemize}
+\end{multicols}
+
+
+\subsection{Procedure}
+\begin{enumerate}
+  \item Throughly clean the bottles prior to collection by brushing them inside with tap water a couple of times and rinse with DIW water a couple of times
+  \item Once in the site, press GPS button to save location
+  \item Rinse the Nalgene Bottle 3 times with water before filling
+  \item Submerge bottle in an undisturbed location to take subsurface water sample (avoid to take water from the surface) and cap the bottle (\cite{Montana08})
+  \item Store bottle up-right immediately in the cooler in order to avoid direct sun light (\cite{Mueller1995})
+  \item Fill the log sheet with the "Location Description", "Bottle Number", "GPS WAYPOINT" and "Time"
+  \item Once off the water, text to Nina or person in charge of the collection for example: "Safe, Long Pond team"
+  \item Place the sample bottles in the refrigerator as soon as possible
+  \item Filter water samples right after collection to preserve the chlorophyll and storage filters in the freezer as soon as possible
+\end{enumerate}
+Notes: 
+\begin{itemize}
+  \item Do not take any personal electronic device with you (recommended)
+  \item Storage car keys in zipped bag in you packet
+  \item In case of bad weather conditions that do not allow paddle the canoes, take at least water samples from the Charlotte pier with the bucket
+\end{itemize}
+
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\newpage
+\section{Colored Dissolved Organic Matter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{CDOM Absorption Coefficient}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%*******************************
+\subsubsection{Equipment}
+%*******************************
+\subsubsection*{Filtration}
+\begin{itemize}
+  \item Whatman GD/X 13 and 25mm Disposable Syringe Filters - Nylon $0.2[\mu m]$ Nylon
+  \item {\color{red}Syringe}
+\end{itemize}
+\subsubsection*{Measurement}
+\begin{itemize}
+  \item Spectrophotometer (Shimdzu UV2100V - Dual beam spectrophotometer)
+  \item Blank cell
+  \item Sample cell
+  \item Purified water
+  \item Ethanol
+\end{itemize}
+%*******************************
+\subsubsection{Procedure}
+%*******************************
+\begin{enumerate}
+  \item \textbf{Turn the Spectrophotometer on at least one hour before measuring}. It needs to be warmed up for optimal measurements.
+  \item Wash the syrenge filter out 3 times with purified water
+  \item Rinse cells a couple of times with a small amount of ethanol by shaking it (optional, if the cells seem dirty)
+  \item Use cotton sweep to clean internal face (optional, if face seems dirty)
+  \item Rinse cell with purified water
+  \item Clean and dry the external surface of the cells with optics paper. Be careful with scratching the surface, specially the front and bottom faces
+  \item Select a Slit Width equal to $5.0~[nm]$ in the photometer software
+  \item Select a Sampling Interval of $1~[nm]$ or $2~[nm]$ in the photometer software
+  \item Fill both cells with purified water and extract bubbles
+  \item Place both blank and sample cells filled with purified water in the sample compartment of the spectrophotometer
+  \item Press "Auto Zero" button in the spectrophotometer software
+  \item Press "Baseline" button in the spectrophotometer software
+  \item Fill sample cell with filtered water from the syringe filter
+  \item Press start button
+  \item Save Channel in the spectrophotometer software
+  \item Go to Data Translation > ASCII Export in spectrophotometer software
+\end{enumerate}
+\textbf{Important:} the samples should be at room temperature. The absorbance measuremente is sensible to temperature changes.
+%*******************************
+\subsubsection{Data treatment}
+%*******************************
+\begin{itemize}
+  \item Absorvance: $A=-\ln{\displaystyle\frac{1}{T}}$ 
+  \item Substract bias before convert to coefficients
+  \item $a_{CDOM}=2.303~A(\lambda)/L~~[m^{-1}]$ where $A(\lambda)$ is the absorbance and $L$ the pathlenght of the absorbance cell in meters.
+\end{itemize}
+
+
+
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\newpage
+\section{Total Suspended Solid or Suspended Matter}
+\subsection{Total Particle Absorption Coefficient}
+%*******************************
+\subsubsection{Equipment}
+%*******************************
+\subsubsection*{Filtration}
+\begin{itemize}
+  \item Vacuum pump
+  \item Filter tower (filter funnel stem, filter base, funnel, filter cup)
+  \item Whatman Binder-Free Glass Microfiber Filters: Type GF/F - Diameter: 2.5cm
+  \item Forceps
+\end{itemize}
+%*******************************
+\subsubsection*{Measurement}
+\begin{itemize}
+  \item Spectrophotometer
+  \item {\color{red} Two lenses support}
+  \item Squirt bottle with {\color{red} DIW} or small pipette with {\color{red} DIW} 
+  \item Methanol
+\end{itemize}
+%*******************************
+\subsubsection{{\color{red} Procedure}}
+%*******************************
+\begin{enumerate}
+  \item Turn the spectrophotometer on at least 30 minutes before measuring
+  \item Set the spectrophotometer parameters in the UV-2101PC software menu: Configure > Parameters...
+  \item Select the Serial Port to be use for communication with the instrument. Go to: Configure > PC Configuration... In the PC Configuration Parameters, select Photometer Serial Port and click OK
+  \item From the menu, go to Configure > Utilities. In the System Utilities window, Turn Photometer On and press OK
+  \item Pour DIW water to two GF/F Whatman filters and stick them in the two lenses support. Both filter should have the same amount of water. Add water with the pipette or the squirt bottle
+  \item Place the two lenses support in the spectrophotometer
+  \item Press the Baseline button in the UV-2101PC software
+  \item Perform an scanner to see the baseline level of the instrument by pressing the "Start" button in the software
+  \item Press the "Go To WL" button of the software and type $850 [nm]$. Press the "Auto Zero" button of the software (optional)
+  \item Invert water sample bottle a couple of times to mix by turbulence and ensure large particles that settle are re-suspended (\cite{Mitchell2002})
+  \item \label{item:place_filter} Using the forceps, place the filter on the filter base and place the filter cup on the base. \textbf{Record volume filtered}. 
+  \item \label{item:filtration} Turn the vacuum pump on and turn the knob $90^\circ$ to allow filtration. Once all the water pass through the filter, turn the know $90^\circ$ back and the turn the vacuum pump off
+  \item Using the forceps, take the filter with just water from the two lenses support and storage it for future baselines. Do not remove the blank filter ({\color{red} OR reference filter}) for the whole measurement session
+  \item \label{item:place_filter_spec} Using the forceps, take the sample filter from the filtering tower. Add one or a few water drops to the sample filter and stick in the two lenses support. 
+  \item  Measure absorbance in the spectrophotometer by pressing the "Start" button of the software and save data. This will be the $OD_{filt}$ measurement
+  \item Using the forceps, remove carefully the sample filter from two lenses support avoiding to break it and place in the filter tower as in step \ref{item:place_filter}
+  \item Pour enough solvent {\color{red} to sumerge} the filter in the filter cup. {\color{red} Wait 5 min} and then filter as in step \ref{item:filtration}
+  \item Repeat step \ref{item:place_filter_spec}
+  \item Measure absorbance in the spectrophotometer by pressing the "Start" button of the software and save data. This will be the $OD_{no~pig}$ measurement 
+  \item Record the area of filtration in the sample filter
+  \item[]Note: The instrument only allows to save four measurement at the time. To save measurement, go to File > Data Translation > ASCII Export... {\color{red} Select channels to be saved, name files and press OK}
+\end{enumerate}
+%*******************************
+\subsubsection{Calculations}
+%*******************************
+
+
+\subsection{TSS Concentration by weighting}
+%*******************************
+\subsubsection{Equipment}
+%*******************************
+\subsubsection*{Filtration}
+\begin{itemize}
+
+  \item TCLP filters ($47 mm$, $0.7\mu m$)
+  \item Vacuum
+  \item Balance
+  \item Graduate cylinder
+
+\end{itemize}
+
+%*******************************
+\subsubsection{{\color{red} Procedure}}
+%*******************************
+\begin{enumerate}
+  \item Weight filters before filtering
+  \item Record volume to filter. Use graduated cylinder
+  \item Use vacuum to filter water with the TCLP filters to filter the particles
+  \item Weight filter in balance
+  \item Put in aluminium foil with weight
+  \item Dry sample at $75^\circ C$ for a couple of hours
+\end{enumerate}
+
+
+\begin{equation}
+SPM_{\displaystyle concentration} = \frac{[final~filter~weight~(mg) - tare~filter~weight~(mg)]}{volume~filtered~(L)}~~~\left[\frac{mg}{L}\right]
+\end{equation}
+
+
+
+
+
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\newpage
+\section{Pigment}
+\subsection{Chl-a Absorption Coefficient}
+Method described by \cite{Mitchell2002} and \cite{Cleveland1993}
+\subsection{Chl-a Concentration}
+
+
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%% References %%%%%
+\newpage
+% \bibliographystyle{/Users/javier/Desktop/Javier/PHD_RIT/20121_Fall/AdvEnvRS/hw1/IEEEbib}   %>>>> makes bibtex use spiebib.bst
+
+\bibliographystyle{plainnat.bst}
+
+\bibliography{/Users/javier/Desktop/Javier/PHD_RIT/Latex/javier_bib.bib}
+
+
+%%%% APPENDIX %%%%%
+% \newpage
+% \section*{APPENDIX}
+
+
+\end{document} 
+
