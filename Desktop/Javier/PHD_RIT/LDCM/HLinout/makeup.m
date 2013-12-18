@@ -22,7 +22,7 @@ wavelength = wavelength';
 % rr = load('./Rvector130508.txt');
 % rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130511.txt');
 rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919.txt');
-% rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_2.txt');
+
 nruns = size(rr,1)/size(wavelength,1);
 
 
@@ -60,4 +60,24 @@ set(gca,'fontsize',fs)
 
 tt = [wavelength reflectance];
 save('LUTjavier.txt','tt','-ascii')
+
+%% Correct file
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_2.txt');
+nruns = size(rr,1)/size(wavelength,1);
+Rrs = reshape(rr(:,1),size(wavelength,1),nruns);
+reflectance = Rrs*pi;
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,reflectance(:,reflectance(81,:)>=0.04))
+title('Reflectance','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+
+tt = [wavelength reflectance];
+save('LUTjavier.txt','tt','-ascii')
+
+LUT130919_2conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration_list130919_2.txt');
 
