@@ -1,5 +1,7 @@
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout');
+% script to open in ENVI
 %%
+
 wavelength = [...
   4.02500E+02  4.07500E+02  4.12500E+02  4.17500E+02  4.22500E+02  4.27500E+02  4.32500E+02  4.37500E+02  4.42500E+02  4.47500E+02 ...
   4.52500E+02  4.57500E+02  4.62500E+02  4.67500E+02  4.72500E+02  4.77500E+02  4.82500E+02  4.87500E+02  4.92500E+02  4.97500E+02 ...
@@ -29,22 +31,22 @@ nruns = size(rr,1)/size(wavelength,1);
 Lw = reshape(rr(:,1),size(wavelength,1),nruns);
 Ed = reshape(rr(:,2),size(wavelength,1),nruns);
 
-figure
-fs = 15;
-set(gcf,'color','white')
-plot(wavelength,Lw)
-title('Lw','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
-ylabel('Radiance [W/m^2/sr/nm]','fontsize',fs)
-set(gca,'fontsize',fs)
-
-figure
-set(gcf,'color','white')
-plot(wavelength,Ed)
-title('Downwelling Irradiances','fontsize',fs)
-xlabel('wavelength [nm]','fontsize',fs)
-ylabel('Irradiance [W/m^2/nm]','fontsize',fs)
-set(gca,'fontsize',fs)
+% figure
+% fs = 15;
+% set(gcf,'color','white')
+% plot(wavelength,Lw)
+% title('Lw','fontsize',fs)
+% xlabel('wavelength [nm]','fontsize',fs)
+% ylabel('Radiance [W/m^2/sr/nm]','fontsize',fs)
+% set(gca,'fontsize',fs)
+% 
+% figure
+% set(gcf,'color','white')
+% plot(wavelength,Ed)
+% title('Downwelling Irradiances','fontsize',fs)
+% xlabel('wavelength [nm]','fontsize',fs)
+% ylabel('Irradiance [W/m^2/nm]','fontsize',fs)
+% set(gca,'fontsize',fs)
 
 Rrs = Lw./Ed;
 reflectance = Rrs*pi;
@@ -52,7 +54,7 @@ reflectance = Rrs*pi;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,reflectance(:,reflectance(81,:)>=0.04))
+plot(wavelength,reflectance)
 title('Reflectance','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('reflectance','fontsize',fs)
@@ -65,19 +67,37 @@ save('LUTjavier.txt','tt','-ascii')
 rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_2.txt');
 nruns = size(rr,1)/size(wavelength,1);
 Rrs = reshape(rr(:,1),size(wavelength,1),nruns);
-reflectance = Rrs*pi;
+reflectance_2 = Rrs*pi;
 
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wavelength,reflectance(:,reflectance(81,:)>=0.04))
+plot(wavelength,reflectance_2)
 title('Reflectance','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('reflectance','fontsize',fs)
 set(gca,'fontsize',fs)
 
-tt = [wavelength reflectance];
-save('LUTjavier.txt','tt','-ascii')
+tt = [wavelength reflectance_2];
+save('LUTjavier130919.txt','tt','-ascii')
 
 LUT130919_2conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration_list130919_2.txt');
 
+%%
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_3.txt');
+
+nruns = size(rr,1)/size(wavelength,1);
+Rrs = reshape(rr(:,1),size(wavelength,1),nruns);
+Rrs = Rrs*pi;
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,Rrs)
+title('Rrs','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+
+tt = [wavelength Rrs];
+save('LUTjavier130919_3.txt','tt','-ascii')
