@@ -1,5 +1,5 @@
 addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout');
-% script to open in ENVI
+% script to transfrom data in ENVI format
 %%
 
 wavelength = [...
@@ -84,7 +84,9 @@ save('LUTjavier130919.txt','tt','-ascii')
 LUT130919_2conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration_list130919_2.txt');
 
 %%
-rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_3.txt');
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_5.txt');
+LUT130919_5conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration130919_5.txt');
+
 
 nruns = size(rr,1)/size(wavelength,1);
 Rrs = reshape(rr(:,1),size(wavelength,1),nruns);
@@ -98,6 +100,54 @@ title('Rrs','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('reflectance','fontsize',fs)
 set(gca,'fontsize',fs)
+xlim([400 2200])
+ylim([0 .3])
+
 
 tt = [wavelength Rrs];
 save('LUTjavier130919_3.txt','tt','-ascii')
+%% LUT restricted
+CHLmin = 0.0;
+CHLmax = 2.5;
+
+SMmin = 0.0;
+SMmax = 5.0;
+
+CDOMmin = 0.0;
+CDOMmax = 0.5;
+
+Rrs_rest = Rrs(:,LUT130919_5conc(:,1)>=CHLmin & LUT130919_5conc(:,1)<=CHLmax ...
+              & LUT130919_5conc(:,2)>=SMmin & LUT130919_5conc(:,2)<=SMmax ... 
+              & LUT130919_5conc(:,3)>=CDOMmin & LUT130919_5conc(:,3)<=CDOMmax);
+                
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,Rrs_rest)
+title('Rrs restricted','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([400 2200])
+ylim([0 .3])
+%% applying solar zenith correction factor in CDR PIF reflectance spectra
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+CDR115 = [
+0.104145;
+0.121693;
+0.131039;
+0.156533;
+0.167291;
+0.155756];
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L8bands(2:end),CDR115)
+% title('d','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+% xlim([400 2200])
+ylim([0 .17])

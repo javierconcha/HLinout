@@ -1,5 +1,5 @@
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout
-%%
+%% script to plot different HL outputs
 
 pathfolder = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/';
 
