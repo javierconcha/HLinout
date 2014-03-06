@@ -130,24 +130,168 @@ ylabel('reflectance','fontsize',fs)
 set(gca,'fontsize',fs)
 xlim([400 2200])
 ylim([0 .3])
-%% applying solar zenith correction factor in CDR PIF reflectance spectra
-L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 
-CDR115 = [
-0.104145;
-0.121693;
-0.131039;
-0.156533;
-0.167291;
-0.155756];
+%% Determination of dpf for ONTNS
+
+% rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/RvectorONTNSdpfdet.txt');
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/RvectorONTNSdpfdetFINAL.txt');
+nruns = size(rr,1)/size(wavelength,1);
+RrsONTNS = reshape(rr(:,1),size(wavelength,1),nruns);
+RrsONTNS = RrsONTNS*pi;
+
+ONTNSRefinterp = interp1(wavelengthSVC*1000,ONTNSRef,wavelength);
+ONTNSRefinterp(wavelength>=897.5) = ONTNSRefinterp(wavelength==897.5);
+ONTNSRefinterp = ONTNSRefinterp-ONTNSRefinterp(wavelength==897.5);
 
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(L8bands(2:end),CDR115)
-% title('d','fontsize',fs)
+plot(wavelength,RrsONTNS)
+hold on
+plot(wavelength,ONTNSRefinterp,'.-r')
+title('Rrs for ONTNS','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('reflectance','fontsize',fs)
 set(gca,'fontsize',fs)
-% xlim([400 2200])
-ylim([0 .17])
+grid on
+xlim([400 2200])
+% ylim([0 .3])
+
+% [Y,I] = min(sqrt(sum((RrsONTNS-ONTNSRefinterp*ones(1,nruns)).^2)));
+[Y,I] = min(sqrt(sum((RrsONTNS(wavelength>=500,:)-ONTNSRefinterp(wavelength>=500)*ones(1,nruns)).^2)));
+
+filename = 'input_listONTNSdpfdetFINAL.txt';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+C = textscan(c{1}{I},'%s');
+disp(C{:})
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,RrsONTNS(:,I),'b')
+hold on
+plot(wavelength,ONTNSRefinterp,'r')
+title('Rrs for ONTNS','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('Rrs from LUT','Rrs from field')
+grid on
+
+%% Chl scattering from Rolo and Aaron dissertation
+filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/code/IOPold/ChloroSct.txt';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+for index = 11:size(c{:},1)-1
+    C = textscan(c{1}{index},'%f%f');
+    wl_chl_scat(index-10) = C{1};
+    chl_scat(index-10) = C{2};
+end
+
+figure 
+fs = 15;
+set(gcf,'color','white')
+plot(wl_chl_scat,chl_scat)
+title('chlorophyll mass-specific scattering coefficient','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('b*, [m^2/\mug]','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+%% Suspended Solids scattering from Aaron dissertation
+filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/code/IOPold/OopsSusMinSct.txt';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+for index = 11:size(c{:},1)-1
+    C = textscan(c{1}{index},'%f%f');
+    wl_sm_scat(index-10) = C{1};
+    sm_scat(index-10) = C{2};
+end
+
+figure 
+fs = 15;
+set(gcf,'color','white')
+plot(wl_sm_scat,sm_scat)
+title('Suspended Solids mass-specific scattering coefficient','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('b*, [m^2/mg]','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+%% Suspended Solids scattering from HL default
+filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/code/IOPold/bstarmin_average.txt';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+for index = 11:size(c{:},1)-1
+    C = textscan(c{1}{index},'%f%f');
+    wl_sm_scat2(index-10) = C{1};
+    sm_scat2(index-10) = C{2};
+end
+
+figure 
+fs = 15;
+set(gcf,'color','white')
+plot(wl_sm_scat2,sm_scat2)
+title('Suspended Solids mass-specific scattering coefficient','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('b*, [m^2/mg]','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+%% Suspended Solids scattering from ROLO dissertation
+filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/code/IOPold/susmin.sct';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+for index = 11:size(c{:},1)-1
+    C = textscan(c{1}{index},'%f%f');
+    wl_sm_scat3(index-10) = C{1};
+    sm_scat3(index-10) = C{2};
+end
+
+figure 
+fs = 15;
+set(gcf,'color','white')
+plot(wl_sm_scat3,sm_scat3)
+title('mineral particle mass-specific scattering coefficient','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('b*, [m^2/mg]','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+%% Suspended Solids scattering from Bukata 91
+filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/code/IOPold/susmin_bukata91.sct';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+for index = 11:size(c{:},1)-1
+    index
+    C = textscan(c{1}{index},'%f%f');
+    wl_sm_scat4(index-10) = C{1};
+    sm_scat4(index-10) = C{2};
+end
+
+figure 
+fs = 15;
+set(gcf,'color','white')
+plot(wl_sm_scat4,sm_scat4,'.-')
+title('Suspended Solids mass-specific absorption coefficient','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('b*, [m^2/mg]','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+
+

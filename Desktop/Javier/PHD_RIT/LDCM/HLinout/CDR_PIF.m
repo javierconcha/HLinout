@@ -13,12 +13,12 @@ OBSmean = 0.0001*reshape(tt(:,3),6,nscenes);
 
 % OBSmean = [OBSmean(:,1:3) OBSmean(:,5:end)];
 
-wl = [0.485, 0.56, 0.66, 0.83, 1.65, 2.22];
+L5bands = [0.485, 0.56, 0.66, 0.83, 1.65, 2.22];
 
 figure 
 fs = 15;
 set(gcf,'color','white')
-plot(wl,OBSmean)
+plot(L5bands,OBSmean)
 legend('0115','0179','0307','1133','1165'...
     ,'1293','1325','1341','2216','Location','EastOutside');
 tit = sprintf('PIF Mean Reflectance, %i scenes',nscenes)
@@ -32,12 +32,12 @@ hold on
 % 427 478 546 608 659 724 831 908x
 m = get(gca,'ylim');
 lw = 1.0;
-line([0.485 0.485],m,'Color','b','LineWidth',lw)
-line([0.56 0.56],m,'Color','g','LineWidth',lw)
-line([0.66 0.66],m,'Color','r','LineWidth',lw)
-line([0.83 0.83],m,'Color','k','LineWidth',lw)
-line([1.65 1.65],m,'Color','k','LineWidth',lw)
-line([2.22 2.22],m,'Color','k','LineWidth',lw)
+line([L5bands(1) L5bands(1)],m,'Color','b','LineWidth',lw)
+line([L5bands(2) L5bands(2)],m,'Color','g','LineWidth',lw)
+line([L5bands(3) L5bands(3)],m,'Color','r','LineWidth',lw)
+line([L5bands(4) L5bands(4)],m,'Color','k','LineWidth',lw)
+line([L5bands(5) L5bands(5)],m,'Color','k','LineWidth',lw)
+line([L5bands(6) L5bands(6)],m,'Color','k','LineWidth',lw)
 %% R vs zenith angle
 disp('----------------------------------------')
 disp('Band n: p(1)      p(2))    r-sq     rmse')
@@ -89,8 +89,8 @@ legend('band 1','band 2','band 3','band 4','band 5'...
     ,'band 6');
 
 %% Correct zenith angle
-sat_angle = 45;
-Y = [sat_angle*m1+y01;
+sat_angle = 45.53970398;
+CDR45degrees = [sat_angle*m1+y01;
      sat_angle*m2+y02;
      sat_angle*m3+y03;
      sat_angle*m4+y04;
@@ -100,11 +100,11 @@ Y = [sat_angle*m1+y01;
 figure 
 fs = 15;
 set(gcf,'color','white')
-plot(wl,OBSmean)
+plot(L5bands,OBSmean)
 hold on
-plot(wl,Y,'*-r','linewidth',1.5)
+plot(L5bands,CDR45degrees,'*-r','linewidth',1.5)
 legend('0115','0179','0307','1133','1165'...
-    ,'1293','1325','1341','2216','45\circ','Location','EastOutside');
+    ,'1293','1325','1341','2216','zenith = 45\circ','Location','EastOutside');
 tit = sprintf('PIF Mean Reflectance, %i scenes',nscenes);
 title(tit,'fontsize',fs)
 xlabel('wavelength [\mum]','fontsize',fs)
@@ -122,6 +122,23 @@ line([0.66 0.66],m,'Color','r','LineWidth',lw)
 line([0.83 0.83],m,'Color','k','LineWidth',lw)
 line([1.65 1.65],m,'Color','k','LineWidth',lw)
 line([2.22 2.22],m,'Color','k','LineWidth',lw)
+%% applying solar zenith correction factor in CDR PIF reflectance spectra
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+CDR115 = OBSmean(:,1);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L5bands,CDR115)
+hold on
+plot(L5bands,CDR45degrees,'*-r')
+legend('0115;zenith = 37^\circ','zenith = 45^\circ')
+xlabel('wavelength [\mum]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+xlim([.4 2.5])
+% ylim([0 .17])
 %% 
 % figure 
 % fs = 15;
@@ -176,7 +193,7 @@ r = [0.128742 0.153118 0.168112 0.225136 0.222973 0.212046];
 figure 
 fs = 15;
 set(gcf,'color','white')
-plot(wl,r,'linewidth',1.2)
+plot(L5bands,r,'linewidth',1.2)
 % legend('0115','0179','0307','1133','1165'...
 %     ,'1293','1325','1341','2216','Location','EastOutside');
 title('PIF Mean Reflectance with   \sigma_s = 0[\circ]','fontsize',fs)
@@ -197,9 +214,73 @@ line([1.65 1.65],m,'Color','k','LineWidth',lw)
 line([2.22 2.22],m,'Color','k','LineWidth',lw)
 
 
-plot(wl,OBSmean)
+plot(L5bands,OBSmean)
 %%
 figure 
 fs = 15;
 set(gcf,'color','white')
 plot(1:6,r)
+%% Extrapolation City pixel from L5
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+% citypx = [
+%     0.4430  0.102244;
+%     0.4826  0.102244;
+%     0.5613  0.119937;
+%     0.6546  0.129334;
+%     0.8646  0.155755;
+%     1.6090  0.166700;
+%     2.2010  0.154745];
+citypx = [
+    0.4430   0.1039;
+    0.4826   0.1039;
+    0.5613   0.1186;
+    0.6546   0.1270;
+    0.8646   0.1601;
+    1.6090   0.1650;
+    2.2010   0.1539];
+
+darkpx = [
+    0.442491    0.015501;
+    0.482764    0.017912;
+    0.560859    0.013945;
+    0.654205    0.003978;
+    0.863971    0.001249;
+    1.609077    0.000000;
+    2.201533    0.000000];
+
+x1 = citypx(2,1);
+x2 = citypx(3,1);
+y1 = citypx(2,2);
+y2 = citypx(3,2);
+
+m0 = (y2-y1)/(x2-x1);
+y0 = y1-m0*x1;
+
+x3 = 0.4430;
+y3 = m0*x3+y0;
+
+figure%(gcf)
+fs = 15;
+set(gcf,'color','white')
+hold on
+plot(citypx(2:end,1),citypx(2:end,2),'r-*')
+% plot(darkpx(:,1)*1000,darkpx(:,2)*100,'g-*')
+plot(x3,y3,'*r')
+% 427 478 546 608 659 724 831 908x
+plot([.4 .7],[(m0*.4+y0) (m0*.7+y0)],'k')
+% ylim([0 30])
+xlim([.4 2.3])
+title('Bright Pixel','fontsize',fs)
+xlabel('wavelength [\mum]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+m = get(gca,'ylim');
+lw = 1.0;
+line([L8bands(1) L8bands(1)],m,'Color','c','LineWidth',lw)
+line([L8bands(2) L8bands(2)],m,'Color','b','LineWidth',lw)
+line([L8bands(3) L8bands(3)],m,'Color','g','LineWidth',lw)
+line([L8bands(4) L8bands(4)],m,'Color','r','LineWidth',lw)
+line([L8bands(5) L8bands(5)],m,'Color','m','LineWidth',lw)
+line([L8bands(6) L8bands(6)],m,'Color','k','LineWidth',lw)
+line([L8bands(7) L8bands(7)],m,'Color','k','LineWidth',lw)

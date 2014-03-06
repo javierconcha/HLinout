@@ -4,7 +4,7 @@ cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout
 pathfolder = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/';
 
 
-% chl dpf = FFbb026; mineral = FFbb028
+%% chl dpf = FFbb026; mineral = FFbb028
 filename = 'Pdark091913old.txt';
 [Rrsold,wlold] = HLextraction(pathfolder,filename);
 
@@ -21,7 +21,6 @@ filename = 'Pdark091913cdp116.txt';
 [Rrscdp116,wlcdp116] = HLextraction(pathfolder,filename);
 
 
-
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -30,11 +29,69 @@ hold on
 plot(wlavgpar,Rrsavgpar,'b')
 plot(wlFFbb002,RrsFFbb002,'k');
 plot(wlcdp116,Rrscdp116,'g');
-legend('old','avgpar','FFbb002','CDOM \gamma=0.116')
+plot(wlFFbb0001,RrsFFbb0001,'--r')
+legend('old','avgpar','FFbb002','CDOM \gamma=0.116','PFFbb0001.txt')
 title('HL output','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Rrs','fontsize',fs)
 set(gca,'fontsize',fs)
 % xlim([400 900])
 
+%% chl dpf = FFbb0001; mineral = FFbb0001;cdom(440)=0.1151 - 03/03/14
+filename = 'PFFbb0001.txt';
+[RrsFFbb0001,wlFFbb0001] = HLextraction(pathfolder,filename);
 
+filename = 'PFFbb0001_2.txt'; % with incorrect scattering
+[RrsFFbb0001_2,wlFFbb0001_2] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb0001_3.txt'; % with correct scattering
+[RrsFFbb0001_3,wlFFbb0001_3] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb022_roloscat.txt'; % from Rolo's scatterinf
+[RrsFFbb0001_roloscat,wlFFbb0001_roloscat] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb022_differentFFbbEL.txt'; % Chl:FFbb001.dpf;SM:FFbb022.dpf in EL
+[RrsFFbb0001_diffFFbbEL,wlFFbb0001_diffFFbbEL] = HLextraction(pathfolder,filename);
+
+
+filename = 'PFFbb022_differentFFbbHL.txt'; % Chl:FFbb001.dpf;SM:FFbb022.dpf in HL
+[RrsFFbb0001_diffFFbbHL,wlFFbb0001_diffFFbbHL] = HLextraction(pathfolder,filename);
+
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wlFFbb0001,RrsFFbb0001,'r')
+hold on
+plot(wlFFbb0001_2,RrsFFbb0001_2,'--r')
+plot(wlFFbb0001_3,RrsFFbb0001_3,'--b')
+plot(wlFFbb0001_roloscat,RrsFFbb0001_roloscat,'--g')
+plot(wlFFbb0001_diffFFbbEL,RrsFFbb0001_diffFFbbEL,'c')
+plot(wlFFbb0001_diffFFbbEL,RrsFFbb0001_diffFFbbHL,'.c')
+
+legend('PFFbb0001.txt','PFFbb0001.txt_2','PFFbb0001.txt_3','roloscat','diffFFbb','diffFFbbHL')
+title('HL output','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Rrs','fontsize',fs)
+set(gca,'fontsize',fs)
+% xlim([400 900])
+%% see if CHL b* change with two different models
+filename = 'PFFbb_01.txt';
+[RrsFFbb_01,wlFFbb_01] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_02.txt';
+[RrsFFbb_02,wlFFbb_02] = HLextraction(pathfolder,filename);
+
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wlFFbb_01,RrsFFbb_01,'r')
+hold on
+plot(wlFFbb_02,RrsFFbb_02,'r')
+
+legend('PFFbb\_01.txt','PFFbb\_02.txt')
+title('HL output','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Rrs','fontsize',fs)
+set(gca,'fontsize',fs)
