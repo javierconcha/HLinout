@@ -221,6 +221,8 @@ fs = 15;
 set(gcf,'color','white')
 plot(1:6,r)
 %% Extrapolation City pixel from L5
+cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
+
 L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 
 % citypx = [
@@ -231,7 +233,7 @@ L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 %     0.8646  0.155755;
 %     1.6090  0.166700;
 %     2.2010  0.154745];
-citypx = [
+citypx = [ % with the correction for zenith angle equal 45
     0.4430   0.1039;
     0.4826   0.1039;
     0.5613   0.1186;
@@ -240,14 +242,14 @@ citypx = [
     1.6090   0.1650;
     2.2010   0.1539];
 
-darkpx = [
-    0.442491    0.015501;
-    0.482764    0.017912;
-    0.560859    0.013945;
-    0.654205    0.003978;
-    0.863971    0.001249;
-    1.609077    0.000000;
-    2.201533    0.000000];
+% darkpx = [
+%     0.442491    0.015501;
+%     0.482764    0.017912;
+%     0.560859    0.013945;
+%     0.654205    0.003978;
+%     0.863971    0.001249;
+%     1.609077    0.000000;
+%     2.201533    0.000000];
 
 x1 = citypx(2,1);
 x2 = citypx(3,1);
@@ -284,3 +286,14 @@ line([L8bands(4) L8bands(4)],m,'Color','r','LineWidth',lw)
 line([L8bands(5) L8bands(5)],m,'Color','m','LineWidth',lw)
 line([L8bands(6) L8bands(6)],m,'Color','k','LineWidth',lw)
 line([L8bands(7) L8bands(7)],m,'Color','k','LineWidth',lw)
+
+BrigtPx = [y3; citypx(2:end,2)];
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L8bands,BrigtPx)
+
+
+Ref = [L8bands', BrigtPx];
+save('BrightRef131909.txt','Ref','-ascii')

@@ -1,4 +1,5 @@
-addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout');
+% addpath('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout');
+cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout
 % script to transfrom data in ENVI format
 %%
 
@@ -83,9 +84,14 @@ save('LUTjavier130919.txt','tt','-ascii')
 
 LUT130919_2conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration_list130919_2.txt');
 
-%%
-rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_5.txt');
-LUT130919_5conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration130919_5.txt');
+%% LUT from HL with 120 wavelength
+% rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_5.txt');
+% LUT130919_5conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration130919_5.txt');
+% rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_140317_2.txt'); 
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_140324.txt'); % LONGS different dpf
+% rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/Rvector130919_140324samedpf.txt'); % LONGS same dpf
+LUT130919_5conc = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/concentration130919_140317.txt');
+
 
 
 nruns = size(rr,1)/size(wavelength,1);
@@ -103,9 +109,9 @@ set(gca,'fontsize',fs)
 xlim([400 2200])
 ylim([0 .3])
 
-
-tt = [wavelength Rrs];
-save('LUTjavier130919_3.txt','tt','-ascii')
+%%
+tt = [wavelength*0.001 Rrs];
+save('LUTjavier130919_140324different.txt','tt','-ascii')
 %% LUT restricted
 CHLmin = 0.0;
 CHLmax = 2.5;
@@ -140,8 +146,8 @@ RrsONTNS = reshape(rr(:,1),size(wavelength,1),nruns);
 RrsONTNS = RrsONTNS*pi;
 
 ONTNSRefinterp = interp1(wavelengthSVC*1000,ONTNSRef,wavelength);
-ONTNSRefinterp(wavelength>=897.5) = ONTNSRefinterp(wavelength==897.5);
-ONTNSRefinterp = ONTNSRefinterp-ONTNSRefinterp(wavelength==897.5);
+% ONTNSRefinterp(wavelength>=897.5) = ONTNSRefinterp(wavelength==897.5);
+% ONTNSRefinterp = ONTNSRefinterp-ONTNSRefinterp(wavelength==897.5);
 
 figure
 fs = 15;
@@ -158,7 +164,8 @@ xlim([400 2200])
 % ylim([0 .3])
 
 % [Y,I] = min(sqrt(sum((RrsONTNS-ONTNSRefinterp*ones(1,nruns)).^2)));
-[Y,I] = min(sqrt(sum((RrsONTNS(wavelength>=500,:)-ONTNSRefinterp(wavelength>=500)*ones(1,nruns)).^2)));
+[Y,I] = min(sqrt(sum((RrsONTNS(wavelength>=500,:)...
+    -ONTNSRefinterp(wavelength>=500)*ones(1,nruns)).^2)));
 
 filename = 'input_listONTNSdpfdetFINAL.txt';
 
@@ -182,6 +189,89 @@ set(gca,'fontsize',fs)
 legend('Rrs from LUT','Rrs from field')
 grid on
 
+Ref = [wavelength*0.001, RrsONTNS(:,I)];
+save('ONTNSRef_bigger500nm.txt','Ref','-ascii')
+%% Determination of dpf for LONGS
+% different  phase functions for CHL:001 and SM:010
+% rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/RvectorLONGSdpf.txt'); 
+% same  phase functions for CHL:007 and SM:007
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/RvectorLONGSdpfsame.txt'); 
+
+
+nruns = size(rr,1)/size(wavelength,1);
+RrsLONGS = reshape(rr(:,1),size(wavelength,1),nruns);
+RrsLONGS = RrsLONGS*pi;
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wavelength,RrsLONGS)
+title('Rrs for LONGS','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+xlim([400 2200])
+% ylim([0 .3])
+
+Ref = [wavelength*0.001, RrsLONGS];
+save('LONGSdpfdetsame.txt','Ref','-ascii')
+%%
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+% RrsLONGSL8 = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/LONGSdpfdetL8.txt');
+RrsLONGSL8 = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/LONGSdpfdetsameL8.txt');
+RrsLONGSL8 = RrsLONGSL8(:,2:end);
+
+nruns = size(RrsLONGSL8,2);
+
+rr = load('/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/LC80160302013262LGN00_ONelm140317bigger500tif_LONGSref.txt');
+LONGSROI = rr(:,2);
+% LONGSROI = LONGSROI-LONGSROI(end);
+
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L8bands,RrsLONGSL8)
+hold on
+plot(L8bands,LONGSROI,'.-g')
+title('Rrs for LONGS - L8','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+grid on
+% %%
+% [Y,I] = min(sqrt(sum((RrsLONGSL8-LONGSROI*ones(1,nruns)).^2)));
+[Y,I] = min(sqrt(sum((RrsLONGSL8(L8bands>=.5,:)...
+    -LONGSROI(L8bands>=.5,:)*ones(1,nruns)).^2)));
+
+filename = 'input_listLONGSdpfsame.txt';
+
+fid = fopen(filename);
+c = textscan(fid,'%s','delimiter','\n');
+fclose all;
+
+C = textscan(c{1}{I},'%s');
+disp(C{:})
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(L8bands,RrsLONGSL8(:,I))
+hold on
+plot(L8bands,LONGSROI,'.-g')
+plot(L8bands,RrsLONGSL8(:,12),'k')
+
+title('Rrs for ONTNS','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('reflectance','fontsize',fs)
+set(gca,'fontsize',fs)
+legend('Rrs from LUT,dpf:007','Rrs from field','dpf:010')
+grid on
+
+Ref = [wavelength*0.001, RrsONTNS(:,I)];
+save('ONTNSRef_bigger500nm.txt','Ref','-ascii')
 %% Chl scattering from Rolo and Aaron dissertation
 filename = '/Users/javier/Desktop/Javier/PHD_RIT/LDCM/HLinout/code/IOPold/ChloroSct.txt';
 

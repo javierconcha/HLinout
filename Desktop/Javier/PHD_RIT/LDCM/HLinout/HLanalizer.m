@@ -82,15 +82,29 @@ filename = 'PFFbb_01.txt';
 filename = 'PFFbb_02.txt';
 [RrsFFbb_02,wlFFbb_02] = HLextraction(pathfolder,filename);
 
+filename = 'PFFbb_LONGS.txt';
+[RrsFFbb_LONGS,wlFFbb_LONGS] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_LONGS_CDOMfit.txt';
+[RrsFFbb_LONGS_CDOMfit,wlFFbb_LONGS_CDOMfit] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_LONGS_012012.txt';
+[RrsFFbb_LONGS_012012,wlFFbb_LONGS_012012] = HLextraction(pathfolder,filename);
+
 
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(wlFFbb_01,RrsFFbb_01,'r')
+plot(wlFFbb_01,RrsFFbb_01,'k')
 hold on
 plot(wlFFbb_02,RrsFFbb_02,'r')
+plot(wlFFbb_LONGS,RrsFFbb_LONGS,'b')
+plot(wlFFbb_LONGS_CDOMfit,RrsFFbb_LONGS_CDOMfit,'--b')
+plot(wlFFbb_LONGS_012012,RrsFFbb_LONGS_012012,'->b')
 
-legend('PFFbb\_01.txt','PFFbb\_02.txt')
+
+
+legend('PFFbb\_01.txt','PFFbb\_02.txt','PFFbb\_LONGS.txt','PFFbb\_LONGS\_CDOMfit.txt','012012')
 title('HL output','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Rrs','fontsize',fs)

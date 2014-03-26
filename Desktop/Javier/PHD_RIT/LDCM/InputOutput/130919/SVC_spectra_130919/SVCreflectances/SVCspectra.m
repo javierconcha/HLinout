@@ -177,7 +177,7 @@ ylabel('reflectance','fontsize',fs)
 
 CharlotteRef = [wavelength, Ref];
 save('Charlotte.txt','CharlotteRef','-ascii')
-%% Ibay pixel - measurements taken in Irondequoit bay
+%% Ibay pixel - measurements taken in Irondequoit bay IBAYN
 figure
 fs = 15;
 set(gcf,'color','white')
@@ -236,9 +236,7 @@ ylabel('reflectance','fontsize',fs)
 
 
 Ibay = [wavelength, Ref];
-save('Ibay.txt','Ibay','-ascii')
-
-
+save('IBAYNRef.txt','Ibay','-ascii')
 %% ONTOS pixel - measurements taken in Lake Ontario off shore
 figure
 fs = 15;
