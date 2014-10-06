@@ -84,6 +84,30 @@
   belowskip=-12pt
 }
 
+\usepackage{hyperref}
+\hypersetup{
+    % bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in AcrobatÕs bookmarks
+    pdftoolbar=true,        % show AcrobatÕs toolbar?
+    pdfmenubar=true,        % show AcrobatÕs menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={L8's potential for water constituents retrieval },    % title
+    pdfauthor={Javier Concha},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfcreator={Creator},   % creator of the document
+    pdfproducer={Producer}, % producer of the document
+    pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,          % color of internal links
+    citecolor=cyan,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=green           % color of external links
+}
+
+\usepackage[all]{hypcap} % to see figure with hyper ref
+
 
 \setlength{\captionmargin}{15pt}
 
@@ -120,6 +144,8 @@
   \begin{document} 
   \maketitle 
 
+  \tableofcontents
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % \section*{ABSTRACT} 
 % \begin{changemargin}{2em}{2em}
@@ -135,6 +161,7 @@
 %----------------------------------------------------------------------
 % SECTION I: Introduction
 %----------------------------------------------------------------------
+\newpage
 \section{Introduction}
 %------------- 
 \begin{figure}[h]
@@ -159,6 +186,7 @@ $a_{YS}$ cannot be determined directly. An approximation of $a_{YS}$ may be obta
 \begin{multicols}{3}
 \begin{itemize}
   \item Dark Nalgene bottles
+  \item Monroe County Environmental Lab bottles
   \item Cooler
   \item Marker
   \item Bottle label
@@ -184,11 +212,15 @@ $a_{YS}$ cannot be determined directly. An approximation of $a_{YS}$ may be obta
 \begin{enumerate}
   \item Throughly clean the bottles prior to collection by brushing them inside with tap water a couple of times and rinse with DIW water a couple of times
   \item Once in the site, press GPS button to save location
-  \item Rinse the Nalgene Bottle 3 times with water before filling
-  \item Submerge bottle in an undisturbed location to take subsurface water sample (avoid to take water from the surface) and cap the bottle (\cite{Montana08})
+  \item Fill the log sheet with the ``Location Description'', ``GPS WAYPOINT'' and ``Time''
+  \item Take a bottle from the cooler and write the bottle label down in the ``Bottle Number'' section on the data sheet along
+  \item Rinse the Nalgene Bottle and cap at least 3 times with water before filling
+  \item Submerge bottle with the cap on it in an undisturbed location.
+  \item Uncap the submerged bottle  to take subsurface water sample (avoid to take water from the surface)[\cite{Montana08}]
+  \item Cap the bottle with the bottle still submerged
   \item Store bottle up-right immediately in the cooler in order to avoid direct sun light (\cite{Mueller1995})
-  \item Fill the log sheet with the "Location Description", "Bottle Number", "GPS WAYPOINT" and "Time"
-  \item Once off the water, text to Nina or person in charge of the collection for example: "Safe, Long Pond team"
+  \item Once off the water, text to Nina or person in charge of the collection for example: ``Safe, Long Pond team''
+  \item Take water some water samples to the Monroe County Environmental Lab, if applicable.
   \item Place the sample bottles in the refrigerator as soon as possible
   \item Filter water samples right after collection to preserve the chlorophyll and storage filters in the freezer as soon as possible
 \end{enumerate}
@@ -199,6 +231,98 @@ Notes:
   \item In case of bad weather conditions that do not allow paddle the canoes, take at least water samples from the Charlotte pier with the bucket
 \end{itemize}
 
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\newpage
+\section{Remote-Sensing Reflectance Measurement}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This section describes how to take the remote-sensing measurement using a single instrument that measures radiance (spectroradiometer or spectrometer) such as an SVC or ASD instrument. This procedure is taken from \cite{Mobley:1999} and \cite{Mueller1995}. 
+
+The remote-sensing reflectance $R_{rs}$ is defined as
+
+\begin{equation}\label{eq:Rrs}
+	R_{rs}(\theta,\phi,\lambda)=\frac{L_w(\theta,\phi,\lambda)}{E_d(\lambda)}
+\end{equation}
+where $L_w$ is the water-leaving radiance in the polar and azimuthal directions $\theta$ and $\phi$, respectively, and $E_d$ is the downwelling spectral plane irradiance incident onto the water surface. A radiometer pointing down toward the water surface in direction $(\pi-\theta,\phi)$ does not directly measure $L_w$. Instead, it measures $L_w$  plus any incident sky radiance reflected $L_r$ by the water surface into the field of view of the sensor. This total radiance at the sensor $L_t$ is define as
+
+\begin{equation}\label{eq:Lt}
+	L_t(\theta,\phi) = L_r(\theta,\phi)+L_w(\theta,\phi)\Rightarrow L_w(\theta,\phi)=L_t(\theta,\phi) - L_r(\theta,\phi)
+\end{equation}
+
+The term $L_r$ can be replaced by
+
+\begin{equation}\label{eq:Lsky}
+	L_r = \rho L_{sky}
+\end{equation}
+where $\rho$ is the proportionality factor that relates the radiance measured when the sensor views the sky to the reflected sky radiance measured when the sensor views the water surface. \cite{Mobley:1999} suggests to use $\rho \approx 0.028$ for a sensor view angle $\theta_v \approx 40^\circ$ from the nadir and  $\phi_v \approx 135^\circ$ from the Sun with the constraints of a clear sky and wind speed less than $5m/s$.
+
+Although $E_d$ could be measured directly with an appropriate sensor, it will be estimated from the radiance measured from a Lambertian surface (Spectralon) because both instruments in this case (SVC and ASD) are set to measure radiance. When an irradiance $E_d$ falls in a Lambertian surface with a known irradiance reflectance $R_g$, the uniform radiance $L_g$ leaving the surface is given by 
+
+\begin{equation}\label{eq:Lg}
+	L_g = (R_g/\pi)E_d\Rightarrow E_d = L_g*\pi/R_g
+\end{equation}
+
+Applying \autoref{eq:Lt} ,\autoref{eq:Lsky} and \autoref{eq:Lg} in \autoref{eq:Rrs} yields
+
+\begin{equation}
+	R_{rs} = \frac{L_t-\rho L_{sky}}{\frac{\displaystyle \pi}{\displaystyle R_g}L_g}
+\end{equation}
+
+\subsection{ASD}
+
+The ASD should be in ``radiance mode''. Three different radiance measurements need to be taken:
+\begin{itemize}
+	\item $L_g$: pointing the Spectralon
+
+Description: $L_g$ is measured with the sensor pointing downward in the same direction as is used in viewing the water surface (see \autoref{fig:Ltmea}), while the Spectralon is inserted into the sensor FOV. The Spectralon should be normal to the water surface.
+
+	\item $L_t$: pointing the water surface
+
+Description: $L_t$ is measured with the sensor pointing downward toward the water surface in the direction $\approx \pi-\theta_v = 140^\circ$ from nadir with $\theta_v = 40^\circ$ and $\phi_v \approx 135^\circ$ or $\phi_v \approx -135^\circ$ from the Sun as illustrated in \autoref{fig:Ltmea}.
+
+\begin{figure}[h]
+\centering
+    \includegraphics[width=10cm]{./Images/Lgmea.png}
+    \vspace{0.5cm}
+   \caption[]{\label{fig:Ltmea} $L_t$ measurement.}
+\end{figure}
+
+	\item $L_{sky}$: pointing the sky
+
+Description: $L_{sky}$ is measured with the sensor pointing upward toward the sky in the direction $\approx \theta_v = 40^\circ$ from nadir and $\phi_v \approx 135^\circ$ or $\phi_v \approx -135^\circ$ from the Sun as illustrated in \autoref{fig:Lskymea}.
+
+\begin{figure}[h]
+\centering
+    \includegraphics[width=10cm]{./Images/Lskymea.png}
+    \vspace{0.5cm}
+   \caption[]{\label{fig:Lskymea} $L_{sky}$ measurement.}
+\end{figure}
+
+\end{itemize}
+
+\subsection{SVC}
+The same three radiance measurements described above need to be taken:
+
+\begin{itemize}
+	\item $L_g$: pointing the Spectralon
+
+Description: The measurement is taken in the same fashion described in the previous section and it is taken only once per site. When the SVC instrument is used in ``reflectance mode'', it is necessary to measure first an standard measurement (Spectralon measurement). This standard measurement is the $L_r$ and is recorded internally in the ``sig'' file. Therefore, $L_r$ needs to be extracted from the later from the ``sig'' file. 
+
+	\item $L_t$: pointing the water surface
+
+Description: $L_t$ is measured in the same fashion described in the previous section. However, this measurement is saved internally in the ``sig'' file after the standard measurement column ($L_g$).
+
+	\item $L_{sky}$: pointing the sky	
+
+Description: $L_{sky}$ is measured in the same fashion described in the previous section. However, this measurement is saved internally in the ``sig'' file after the standard measurement column ($L_g$).
+
+\end{itemize}
+{\bf Notes:}
+\begin{itemize}
+	\item Wear dark clothes, preferable black.
+	\item Avoid any reflection from nearby objects in the boat or ship. 
+\end{itemize}
 %----------------------------------------------------------------------
 % SECTION I: Introduction
 %----------------------------------------------------------------------
@@ -217,7 +341,7 @@ Notes:
 \end{itemize}
 \subsubsection*{Measurement}
 \begin{itemize}
-  \item Spectrophotometer (Shimdzu UV2100V - Dual beam spectrophotometer)
+  \item Spectrophotometer (Shimadzu UV2100V - Dual beam spectrophotometer)
   \item Blank cell
   \item Sample cell
   \item Purified water
@@ -237,21 +361,21 @@ Notes:
   \item Select a Sampling Interval of $1~[nm]$ or $2~[nm]$ in the photometer software
   \item Fill both cells with purified water and extract bubbles
   \item Place both blank and sample cells filled with purified water in the sample compartment of the spectrophotometer
-  \item Press "Auto Zero" button in the spectrophotometer software
-  \item Press "Baseline" button in the spectrophotometer software
+  \item Press ``Auto Zero'' button in the spectrophotometer software
+  \item Press ``Baseline'' button in the spectrophotometer software
   \item Fill sample cell with filtered water from the syringe filter
   \item Press start button
   \item Save Channel in the spectrophotometer software
   \item Go to Data Translation > ASCII Export in spectrophotometer software
 \end{enumerate}
-\textbf{Important:} the samples should be at room temperature. The absorbance measuremente is sensible to temperature changes.
+\textbf{Important:} the samples should be at room temperature. The absorbance measurement is sensible to temperature changes.
 %*******************************
 \subsubsection{Data treatment}
 %*******************************
 \begin{itemize}
-  \item Absorvance: $A=-\ln{\displaystyle\frac{1}{T}}$ 
+  \item Absorbance: $A=-\ln{\displaystyle\frac{1}{T}}$ 
   \item Substract bias before convert to coefficients
-  \item $a_{CDOM}=2.303~A(\lambda)/L~~[m^{-1}]$ where $A(\lambda)$ is the absorbance and $L$ the pathlenght of the absorbance cell in meters.
+  \item $a_{CDOM}=2.303~A(\lambda)/L~~[m^{-1}]$ where $A(\lambda)$ is the absorbance and $L$ the pathlength of the absorbance cell in meters.
 \end{itemize}
 
 
@@ -260,7 +384,7 @@ Notes:
 % SECTION I: Introduction
 %----------------------------------------------------------------------
 \newpage
-\section{Total Suspended Solid or Suspended Matter}
+\section{Total Suspended Solid or TSS (a.k.a. Suspended Matter or SM)}
 \subsection{Total Particle Absorption Coefficient}
 %*******************************
 \subsubsection{Equipment}
@@ -309,8 +433,9 @@ Notes:
 %*******************************
 \subsubsection{Calculations}
 %*******************************
-
-
+.
+.
+.
 \subsection{TSS Concentration by weighting}
 %*******************************
 \subsubsection{Equipment}

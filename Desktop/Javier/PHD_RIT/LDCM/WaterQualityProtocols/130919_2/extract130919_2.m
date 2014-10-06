@@ -93,18 +93,18 @@ xlim([400 900])
 % X_CH_IBAYN = 43.25;
 
 % MONROE County lab Corrected
-X_CH_LONGN = 120;%[ug/L] or [mg/m^3]
-X_CH_LONGS = 104;
-X_CH_CRANB = 72.2;
-X_CH_ONTNS = 3.0;
-X_CH_IBAYN = 48.1;
+% X_CH_LONGN = 120;%[ug/L] or [mg/m^3]
+% X_CH_LONGS = 104;
+% X_CH_CRANB = 72.2;
+% X_CH_ONTNS = 3.0;
+% X_CH_IBAYN = 48.1;
 
-% 10200HC Uncorrected
-% X_CH_LONGN = 148.47;%[ug/L] or [mg/m^3]
-% X_CH_LONGS = 124.03;
-% X_CH_CRANB = 65.77;
-% X_CH_ONTNS = 1.01;
-% X_CH_IBAYN = 46.81;
+% Me 10200HC Uncorrected
+X_CH_LONGN = 148.47;%[ug/L] or [mg/m^3]
+X_CH_LONGS = 124.03;
+X_CH_CRANB = 65.77;
+X_CH_ONTNS = 1.01;
+X_CH_IBAYN = 46.81;
 
 % MONROE County lab Uncorrected
 % X_CH_LONGN = 140;%[ug/L] or [mg/m^3]
@@ -127,15 +127,15 @@ plot(wavelength,astar_CH_LONGS,'k')
 plot(wavelength,astar_CH_CRANB,'r')
 plot(wavelength,astar_CH_ONTNS,'g')
 plot([wavelength(1) wavelength(end)],[0 0],'k')
-title('CH mass-specific absorption coeff. -- County lab Corrected','fontsize',fs)
+title('CH mass-specific absorption coeff.','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('a*, [m^2/mg]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTNS')
 xlim([400 900])
 
-astar = [wavelength(end:-1:1) astar_CH_CRANB(end:-1:1)];
-save('astarCHL091913.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_CH_CRANB(end:-1:1)];
+% save('astarCHL091913.txt','-ascii','astar')
 
 
 %% Save CHL ONTNS for using in HL
@@ -163,7 +163,7 @@ set(gca,'fontsize',fs)
 
 
 astar = [wavelength(end:-1:1) astar_CH_ONTNS_corrected(end:-1:1)];
-save('astar_CH_ONTNS091913.txt','-ascii','astar')
+save('astar_CH_ONTNS091913_10200HC.txt','-ascii','astar')
 %% Save CHL LONGS for using in HL
 
 astar_CH_LONGS_corrected = astar_CH_LONGS;
@@ -203,19 +203,27 @@ save('astar_CH_LONGS091913.txt','-ascii','astar')
 % a: [m^{-1}]
 % => astar: 0.001[m^2/ug] 
 
-X_SM_LONGN = 48;
-X_SM_LONGS = 46;
-X_SM_CRANB = 26.7;
-X_SM_ONTNS = 1.6;
-X_SM_IBAYN = 10.3;
+% County
+% X_SM_LONGN = 48;
+% X_SM_LONGS = 46;
+% X_SM_CRANB = 26.7;
+% X_SM_ONTNS = 1.6;
+% X_SM_IBAYN = 10.3;
 
-astar_SM_LONGN = a_SM_LONGN/X_SM_LONGN;%[m^2/mg]
+% RIT
+X_SM_LONGN = 36.15;
+X_SM_LONGS = 23.85;
+X_SM_CRANB = 17.33;
+X_SM_ONTNS = 0.10;
+X_SM_IBAYN = 6.2;
+
+astar_SM_LONGN = a_SM_LONGN/X_SM_LONGN;%[m^2/g]
 astar_SM_LONGS = a_SM_LONGS/X_SM_LONGS;
 astar_SM_CRANB = a_SM_CRANB/X_SM_CRANB; 
 astar_SM_ONTNS = a_SM_ONTNS/X_SM_ONTNS;
 astar_SM_IBAYN = a_SM_IBAYN/X_SM_IBAYN;
 
-figure % in a*, [m^2/mg]
+figure % in a*, [m^2/g]
 fs = 15;
 set(gcf,'color','white')
 plot(wavelength,astar_SM_LONGN)
@@ -225,9 +233,9 @@ plot(wavelength,astar_SM_CRANB,'r')
 plot(wavelength,astar_SM_ONTNS,'g')
 plot(wavelength,astar_SM_IBAYN,'m')
 plot([wavelength(1) wavelength(end)],[0 0],'k')
-title('CH mass-specific absorption coeff.','fontsize',fs)
+title('SM mass-specific absorption coeff. -- RIT','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
-ylabel('a*, [m^2/mg]','fontsize',fs)
+ylabel('a*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTNS','IBAYN')
 xlim([400 900])
@@ -253,14 +261,14 @@ hold on
 plot([wavelength(1) wavelength(end)],[0 0],'k')
 title('mineral particle mass-specific absorption coefficient -- ONTNS','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
-ylabel('a*, [m^2/mg]','fontsize',fs)
+ylabel('a*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 % legend('ONTNS')
 % xlim([400 900])
 
 
 astar = [wavelength(end:-1:1) astar_SM_ONTNS_corrected(end:-1:1)];
-save('astar_SM_ONTNS091913.txt','-ascii','astar')
+save('astar_SM_ONTNS091913_RIT.txt','-ascii','astar')
 
 %% Save SM LONGS for using in HL
 
@@ -281,7 +289,7 @@ plot(wavelength,astar_SM_LONGS_corrected,'r','linewidth',1.2)
 grid on
 title('CH mass-specific absorption coeff. -- LONGS','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
-ylabel('a*, [m^2/mg]','fontsize',fs)
+ylabel('a*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGS')
 % xlim([400 900])

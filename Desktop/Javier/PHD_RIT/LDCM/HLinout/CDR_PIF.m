@@ -152,20 +152,20 @@ xlim([.4 2.5])
 % set(gca,'fontsize',fs)
 % % axis([300 1000 0 0.45])
 
-%% 
-
-maximum = 5;
-figure 
-fs = 15;
-set(gcf,'color','white')
-plot(1:6,OBSmean./(OBSmean(:,maximum)*ones(1,9)))
-legend('0115','0179','0307','1133','1165'...
-    ,'1293','1325','1341','2216','Location','EastOutside' );
-title('Normalization for the max curve (1165)','fontsize',fs)
-xlabel('band','fontsize',fs)
-ylabel('reflectance','fontsize',fs)
-set(gca,'fontsize',fs)
-% axis([300 1000 0 0.45])
+% %% 
+% 
+% maximum = 5;
+% figure 
+% fs = 15;
+% set(gcf,'color','white')
+% plot(1:6,OBSmean./(OBSmean(:,maximum)*ones(1,9)))
+% legend('0115','0179','0307','1133','1165'...
+%     ,'1293','1325','1341','2216','Location','EastOutside' );
+% title('Normalization for the max curve (1165)','fontsize',fs)
+% xlabel('band','fontsize',fs)
+% ylabel('reflectance','fontsize',fs)
+% set(gca,'fontsize',fs)
+% % axis([300 1000 0 0.45])
 
 %%
 
@@ -187,39 +187,39 @@ x = 6;
 A*zenith(2)*OBSmean(band,2)/zenith(x)
 OBSmean(band,x)
 
-%% zenith equal to zero
-r = [0.128742 0.153118 0.168112 0.225136 0.222973 0.212046];
-
-figure 
-fs = 15;
-set(gcf,'color','white')
-plot(L5bands,r,'linewidth',1.2)
-% legend('0115','0179','0307','1133','1165'...
-%     ,'1293','1325','1341','2216','Location','EastOutside');
-title('PIF Mean Reflectance with   \sigma_s = 0[\circ]','fontsize',fs)
-xlabel('wavelength [um]','fontsize',fs)
-ylabel('reflectance','fontsize',fs)
-set(gca,'fontsize',fs)
-% axis([0.450 2.500 0 0.2])
-
-hold on
-% 427 478 546 608 659 724 831 908
-m = get(gca,'ylim');
-lw = 1.0;
-line([0.485 0.485],m,'Color','b','LineWidth',lw)
-line([0.56 0.56],m,'Color','g','LineWidth',lw)
-line([0.66 0.66],m,'Color','r','LineWidth',lw)
-line([0.83 0.83],m,'Color','k','LineWidth',lw)
-line([1.65 1.65],m,'Color','k','LineWidth',lw)
-line([2.22 2.22],m,'Color','k','LineWidth',lw)
+% %% zenith equal to zero
+% r = [0.128742 0.153118 0.168112 0.225136 0.222973 0.212046];
+% 
+% figure 
+% fs = 15;
+% set(gcf,'color','white')
+% plot(L5bands,r,'linewidth',1.2)
+% % legend('0115','0179','0307','1133','1165'...
+% %     ,'1293','1325','1341','2216','Location','EastOutside');
+% title('PIF Mean Reflectance with   \sigma_s = 0[\circ]','fontsize',fs)
+% xlabel('wavelength [um]','fontsize',fs)
+% ylabel('reflectance','fontsize',fs)
+% set(gca,'fontsize',fs)
+% % axis([0.450 2.500 0 0.2])
+% 
+% hold on
+% % 427 478 546 608 659 724 831 908
+% m = get(gca,'ylim');
+% lw = 1.0;
+% line([0.485 0.485],m,'Color','b','LineWidth',lw)
+% line([0.56 0.56],m,'Color','g','LineWidth',lw)
+% line([0.66 0.66],m,'Color','r','LineWidth',lw)
+% line([0.83 0.83],m,'Color','k','LineWidth',lw)
+% line([1.65 1.65],m,'Color','k','LineWidth',lw)
+% line([2.22 2.22],m,'Color','k','LineWidth',lw)
 
 
 plot(L5bands,OBSmean)
 %%
-figure 
-fs = 15;
-set(gcf,'color','white')
-plot(1:6,r)
+% figure 
+% fs = 15;
+% set(gcf,'color','white')
+% plot(1:6,r)
 %% Extrapolation City pixel from L5
 cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
 
@@ -233,14 +233,7 @@ L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 %     0.8646  0.155755;
 %     1.6090  0.166700;
 %     2.2010  0.154745];
-citypx = [ % with the correction for zenith angle equal 45
-    0.4430   0.1039;
-    0.4826   0.1039;
-    0.5613   0.1186;
-    0.6546   0.1270;
-    0.8646   0.1601;
-    1.6090   0.1650;
-    2.2010   0.1539];
+citypx = [ L8bands' [CDR45degrees(1,1); CDR45degrees]]; % with the correction for zenith angle equal 45
 
 % darkpx = [
 %     0.442491    0.015501;
@@ -289,11 +282,13 @@ line([L8bands(7) L8bands(7)],m,'Color','k','LineWidth',lw)
 
 BrigtPx = [y3; citypx(2:end,2)];
 
+RrsDTROC = BrigtPx./pi;
+
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(L8bands,BrigtPx)
+plot(L8bands,RrsDTROC)
 
 
-Ref = [L8bands', BrigtPx];
-save('BrightRef131909.txt','Ref','-ascii')
+Ref = [L8bands', RrsDTROC];
+save('RrsDTROC131909.txt','Ref','-ascii')

@@ -109,3 +109,87 @@ title('HL output','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Rrs','fontsize',fs)
 set(gca,'fontsize',fs)
+
+%% two different astar method
+filename = 'PFFbb_ONTNS_Cristy.txt';
+[RrsFFbb_01,wlFFbb_01] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_10200HC.txt';
+[RrsFFbb_02,wlFFbb_02] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_SMRIT.txt';
+[RrsFFbb_03,wlFFbb_03] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_SMRIT2.txt';
+[RrsFFbb_04,wlFFbb_04] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_SMRIT3.txt';
+[RrsFFbb_05,wlFFbb_05] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_SMRIT4.txt';
+[RrsFFbb_06,wlFFbb_06] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_SMRIT5.txt';
+[RrsFFbb_07,wlFFbb_07] = HLextraction(pathfolder,filename);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wlFFbb_01,RrsFFbb_01,'k')
+hold on
+plot(wlFFbb_02,RrsFFbb_02,'r')
+plot(wlFFbb_03,RrsFFbb_03,'--r')
+plot(wlFFbb_04,RrsFFbb_04,'--k')
+plot(wlFFbb_05,RrsFFbb_05,'-.k')
+plot(wlFFbb_06,RrsFFbb_06,'-.g')
+plot(wlFFbb_07,RrsFFbb_07,'g')
+
+
+legend('CHL:Cristy;SM:County','CHL:10200HC;SM:County',...
+    'CHL:10200HC;SM: RIT','CHL:Cristy;SM: RIT','CHL:Cristy;SM: RIT .1 [mg/L]')
+title('HL output','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Rrs','fontsize',fs)
+set(gca,'fontsize',fs)
+%% Compare shape
+
+ONTNSRefnooffset = ONTNSRef-ONTNSRef(wavelengthSVC==.8468);
+
+figure
+plot(wlFFbb_05,RrsFFbb_05./max(RrsFFbb_05),'-.k')
+hold on
+plot(wavelengthSVC*1000,ONTNSRefnooffset./max(ONTNSRefnooffset),'g')
+plot(wlFFbb_01,RrsFFbb_01./max(RrsFFbb_01),'k')
+plot(wlFFbb_06,RrsFFbb_06./max(RrsFFbb_06),'--g')
+
+%% two different astar method
+filename = 'PFFbb_ONTNS_SMRIT6.txt';
+[RrsFFbb_06,wlFFbb_06] = HLextraction(pathfolder,filename);
+
+filename = 'PFFbb_ONTNS_SMRIT7.txt';
+[RrsFFbb_07,wlFFbb_07] = HLextraction(pathfolder,filename);
+
+figure
+fs = 15;
+set(gcf,'color','white')
+plot(wlFFbb_06,RrsFFbb_06,'k')
+hold on
+plot(wlFFbb_07,RrsFFbb_07,'r')
+
+
+legend('CHL:Cristy,0.48;SM:RIT,0.1','CHL:10200HC,1.01;SM:RIT,0.1')
+title('HL output','fontsize',fs)
+xlabel('wavelength [nm]','fontsize',fs)
+ylabel('Rrs','fontsize',fs)
+set(gca,'fontsize',fs)
+%% Compare shape
+
+ONTNSRefnooffset = ONTNSRef-ONTNSRef(wavelengthSVC==.8468);
+
+figure
+plot(wlFFbb_06,RrsFFbb_06./max(RrsFFbb_06),'-.k')
+hold on
+plot(wavelengthSVC*1000,ONTNSRefnooffset./max(ONTNSRefnooffset),'g')
+plot(wlFFbb_07,RrsFFbb_07./max(RrsFFbb_07),'k')
+
+

@@ -95,13 +95,29 @@ wavelengthSVC = wavelengthSVC(cond);
 meanRef = mean(D,2)./100; % decimal
 ONTNSRef = meanRef(cond);
 
+cond2 = wavelengthSVC>=0.8 & wavelengthSVC<=0.9;
+
+
+ONTNSRefcorr = ONTNSRef-mean(ONTNSRef(cond2));
+
+
 figure
 fs = 15;
 set(gcf,'color','white')
 set(gca,'fontsize',fs)
-plot(wavelengthSVC,ONTNSRef,'k')
-xlabel('wavelength [\mu m]','fontsize',fs)
+% plot(wavelengthSVC.*1E3,ONTNSRefcorr,'k')
+xlabel('wavelength [nm]','fontsize',fs)
 ylabel('reflectance','fontsize',fs)
+
+ONTSRefL8 = spect_sampL8(ONTNSRefcorr,wavelengthSVC);
+L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
+
+hold on
+plot(L8bands*1E3,ONTSRefL8,'.-r')
+plot(L8bands.*1E3,RrsONTNSL8corr*pi,'.-b')
+legend('old','new')
+title('ONTNS 09/19/13')
+grid on
 
 
 NSRef = [wavelengthSVC, ONTNSRef];
