@@ -258,8 +258,8 @@ RrsDTROC = BrigtPx./pi;
 figure
 fs = 15;
 set(gcf,'color','white')
-plot(L8bands,RrsDTROC)
+plot(L8bands,CDRzenithcorrected/pi)
 
 
-Ref = [L8bands', RrsDTROC];
-save('RrsDTROC131909.txt','Ref','-ascii')
+Ref = [L8bands', CDRzenithcorrected/pi];
+save('RrsDTROC4272.txt','Ref','-ascii')

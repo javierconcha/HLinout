@@ -56,6 +56,7 @@ ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTNS','IBAYN');
 xlim([400 900])
+grid on
 
 figure
 fs = 15;
@@ -73,6 +74,7 @@ ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTNS','IBAYN')
 xlim([400 900])
+grid on
 
 %% CH mass-specific absorption coefficient
 % astar = a/X where a is absorption coeff. and X is the component concentration
@@ -133,6 +135,7 @@ ylabel('a*, [m^2/mg]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTNS')
 xlim([400 900])
+grid on
 
 % astar = [wavelength(end:-1:1) astar_CH_CRANB(end:-1:1)];
 % save('astarCHL091913.txt','-ascii','astar')
@@ -162,8 +165,8 @@ set(gca,'fontsize',fs)
 % xlim([400 900])
 
 
-astar = [wavelength(end:-1:1) astar_CH_ONTNS_corrected(end:-1:1)];
-save('astar_CH_ONTNS091913_10200HC.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_CH_ONTNS_corrected(end:-1:1)];
+% save('astar_CH_ONTNS091913_10200HC.txt','-ascii','astar')
 %% Save CHL LONGS for using in HL
 
 astar_CH_LONGS_corrected = astar_CH_LONGS;
@@ -189,8 +192,8 @@ legend('LONGS')
 % xlim([400 900])
 
 
-astar = [wavelength(end:-1:1) astar_CH_LONGS_corrected(end:-1:1)];
-save('astar_CH_LONGS091913.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_CH_LONGS_corrected(end:-1:1)];
+% save('astar_CH_LONGS091913.txt','-ascii','astar')
 
 %% SM mass-specific absorption coefficient
 % astar = a/X where a is absorption coeff. and X is the component concentration
@@ -239,6 +242,7 @@ ylabel('a*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 legend('LONGN','LONGS','CRANB','ONTNS','IBAYN')
 xlim([400 900])
+grid on
 %  
 % astar = [wavelength(end:-1:1) astar_CH_CRANB(end:-1:1)];
 % save('astarCHL091913.txt','-ascii','astar')
@@ -267,8 +271,8 @@ set(gca,'fontsize',fs)
 % xlim([400 900])
 
 
-astar = [wavelength(end:-1:1) astar_SM_ONTNS_corrected(end:-1:1)];
-save('astar_SM_ONTNS091913_RIT.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_SM_ONTNS_corrected(end:-1:1)];
+% save('astar_SM_ONTNS091913_RIT.txt','-ascii','astar')
 
 %% Save SM LONGS for using in HL
 
@@ -295,8 +299,8 @@ legend('LONGS')
 % xlim([400 900])
 
 
-astar = [wavelength(end:-1:1) astar_SM_LONGS_corrected(end:-1:1)];
-save('astar_SM_LONGS091913.txt','-ascii','astar')
+% astar = [wavelength(end:-1:1) astar_SM_LONGS_corrected(end:-1:1)];
+% save('astar_SM_LONGS091913.txt','-ascii','astar')
 %% CDOM absorption coefficient
 
 a_CDIBAYN  = CdomExtraction(CDIBAYN);

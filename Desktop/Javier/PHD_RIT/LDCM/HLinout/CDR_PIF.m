@@ -89,13 +89,14 @@ legend('band 1','band 2','band 3','band 4','band 5'...
     ,'band 6');
 
 %% Correct zenith angle
-sat_angle = 45.53970398;
+sat_elev = 42.03161132;%45.53970398;
+sat_zenith = 90 - sat_elev;
 CDR45degrees = [sat_angle*m1+y01;
-     sat_angle*m2+y02;
-     sat_angle*m3+y03;
-     sat_angle*m4+y04;
-     sat_angle*m5+y05;
-     sat_angle*m6+y06];
+     sat_zenith*m2+y02;
+     sat_zenith*m3+y03;
+     sat_zenith*m4+y04;
+     sat_zenith*m5+y05;
+     sat_zenith*m6+y06];
  
 figure 
 fs = 15;
@@ -221,7 +222,7 @@ plot(L5bands,OBSmean)
 % set(gcf,'color','white')
 % plot(1:6,r)
 %% Extrapolation City pixel from L5
-cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
+% cd /Users/javier/Desktop/Javier/PHD_RIT/LDCM/InputOutput/
 
 L8bands = [0.4430,0.4826,0.5613,0.6546,0.8646,1.6090,2.2010];
 
