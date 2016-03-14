@@ -301,7 +301,7 @@ set(gcf,'color','white')
 plot(wl_chl_scat,chl_scat)
 title('chlorophyll mass-specific scattering coefficient','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
-ylabel('b*, [m^2/\mug]','fontsize',fs)
+ylabel('b*, [m^2/mg]','fontsize',fs)
 set(gca,'fontsize',fs)
 grid on
 %% Suspended Solids scattering from Aaron dissertation
@@ -323,7 +323,7 @@ set(gcf,'color','white')
 plot(wl_sm_scat,sm_scat)
 title('Suspended Solids mass-specific scattering coefficient','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
-ylabel('b*, [m^2/mg]','fontsize',fs)
+ylabel('b*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 grid on
 %% Suspended Solids scattering from HL default
@@ -365,9 +365,9 @@ figure
 fs = 15;
 set(gcf,'color','white')
 plot(wl_sm_scat3,sm_scat3)
-title('mineral particle mass-specific scattering coefficient','fontsize',fs)
+title('SM mass-specific scattering coefficient','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
-ylabel('b*, [m^2/mg]','fontsize',fs)
+ylabel('b*, [m^2/g]','fontsize',fs)
 set(gca,'fontsize',fs)
 grid on
 %% Suspended Solids scattering from Bukata 91

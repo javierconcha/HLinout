@@ -369,15 +369,17 @@ y = a*exp(b*wavelength)/0.1185;
 figure
 fs = 15;
 set(gcf,'color','white')
-% plot(wavelength,y ,'k');
-% hold on
-% plot(wavelength,aasterisk,'r')
-plot(wavelength,a_CDONTNS440 ,'k');
-% plot([wavelength(1) wavelength(end)],[0 0],'k')
+plot(wavelength,y ,'k');
+hold on
+plot(wavelength,aasterisk,'r')
+plot(wavelength,a_CDONTNS440,'b');
+plot([wavelength(1) wavelength(end)],[0 0],'k')
 title('CDOM Absorption Coefficient ONTNS','fontsize',fs)
 xlabel('wavelength [nm]','fontsize',fs)
 ylabel('Absorption Coefficient m^{-1}','fontsize',fs)
 set(gca,'fontsize',fs)
+legend('y','a*','a_{CDONTNS}(440)')
+grid on
 % xlim([400 900])
 %% CDOM absorption coefficient normalized at a(440)=1
 
@@ -392,6 +394,40 @@ a_CDBRADON440 = a_CDBRADON./a_CDBRADON(wavelength==440);
 a_CDCRANB440 =  a_CDCRANB./a_CDCRANB(wavelength==440);
 a_CDLONGN440 =  a_CDLONGN./a_CDLONGN(wavelength==440);
 a_CDLONGS440 =  a_CDLONGS./a_CDLONGS(wavelength==440);
+
+
+disp('a_CDIBAYN(440):')
+disp(a_CDIBAYN(wavelength==440))
+
+disp('a_CDONTEX(440):')
+disp(a_CDONTEX(wavelength==440))
+
+disp('a_CDONTNS(440):')
+disp(a_CDONTNS(wavelength==440))
+
+disp('a_CDONTOS(440):')
+disp(a_CDONTOS(wavelength==440))
+
+disp('a_CDRVRPIE(440):')
+disp(a_CDRVRPIE(wavelength==440))
+
+disp('a_CDRVRPLM(440):')
+disp(a_CDRVRPLM(wavelength==440))
+
+disp('a_CDBRADIN(440):')
+disp(a_CDBRADIN(wavelength==440))
+
+disp('a_CDBRADON(440):')
+disp(a_CDBRADON(wavelength==440))
+
+disp('a_CDCRANB(440):')
+disp(a_CDCRANB(wavelength==440))
+
+disp('a_CDLONGN(440):')
+disp(a_CDLONGN(wavelength==440))
+
+disp('a_CDLONGS(440):')
+disp(a_CDLONGS(wavelength==440))
 
 
 figure
@@ -419,7 +455,7 @@ legend('CDIBAYN ','CDONTEX ','CDONTNS ','CDONTOS ','CDRVRPIE','CDRVRPLM','CDBRAD
 % xlim([400 900])
 %% PLOT CDOM LONGS
 
-a_CDLONGS440corrected = a_CDLONGS440;
+a_CDLONGS440corrected = a_CDLONGS440-a_CDLONGS440(440);
 a_CDLONGS440corrected(wavelength>800)=0;
 figure
 fs = 15;
